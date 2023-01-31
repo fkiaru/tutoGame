@@ -57,26 +57,6 @@ def clearcells(cell):   #Clear cells around central
                     value = font.render(str(matrix[ax][ay]), True, BLACK)
                     DISPLAYSURF.blit(value, ((ax*40)+11,(ay*40)+11))
                 prevhitlist.add((ax,ay))
-    # pygame.display.update()
-
-def changecolor(cell, HIT):    #HIT : If HIT BOMB
-    x,y = cell
-    x = x*40
-    y=y*40
-    i = 1
-    # while i < 40:
-    #     pygame.draw.line(DISPLAYSURF, WHITE, (x+1,y+i),(x+39,y+i))
-    #     i += 1
-    if HIT: # Hit a bomb
-        changecellcolor(cell, RED)
-        rect = MINE_IMG.get_rect()
-        rect.center = (x+20,y+20)
-        #DISPLAYSURF.blit(MINE_IMG, rect)
-        i=1
-    else:   #Clear up all 6 cells
-        changecellcolor(cell, WHITE)
-        pass
-
 
 if __name__ == "__main__":
 
@@ -92,7 +72,7 @@ if __name__ == "__main__":
     # Game loop
     while True:
         scores = font.render(str(curscore), True, BLACK)
-        DISPLAYSURF.blit(scores, (10,10))
+        #DISPLAYSURF.blit(scores, (10,10))
         for event in pygame.event.get():    #pygame.event.get gets the event done by the user (mouse scroll, click, type etc)
             if event.type == QUIT:  #If we attempt to guit the game, the game quits.
                 pygame.quit()   #Closes the pygame window
@@ -103,6 +83,10 @@ if __name__ == "__main__":
                 x = xcoord//40
                 y = ycoord//40
                 cell = (x,y)
+                if len(prevhitlist) == 0 and cell in mines: # So that person doesn't die on first chance
+                    mines = logic.placement(debug,matrix,mines)
+                    matrix = logic.numbering(matrix,mines)
+
                 if event.button == 3:
                     changecellcolor(cell,BLUE)
                     prevhitlist.add(cell)
@@ -124,12 +108,6 @@ if __name__ == "__main__":
                             pygame.display.set_caption("Minesweeper") 
                 if set(mines).issubset(prevhitlist):
                     Winner = 1
-            # elif event.type == MOUSEBUTTONUP:
-            #     mouse_pressed = False
-            #     elapsed_time = time.time() - press_time
-            #     if elapsed_time > 0.4:
-            #         changecellcolor(cell,BLUE)
-            #         prevhitlist.add(cell)
 
             if Winner == 1:
                 pygame.display.set_caption("WINNER")
