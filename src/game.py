@@ -21,7 +21,7 @@ DISPLAYSURF = pygame.display.set_mode((XDIM, YDIM),pygame.SCALED)
 FramePerSec = pygame.time.Clock()
 FPS = 50
 DISPLAYSURF.fill(GREY)
-MINE_IMG = pygame.image.load("resources/mine.png")
+MINE_IMG = pygame.image.load("../resources/mine.png")
 font = pygame.font.SysFont("Verdana", 20)
 prevhitlist = set()
 mines = []
@@ -113,7 +113,7 @@ if __name__ == "__main__":
                 pygame.display.set_caption("WINNER")
                 drawboardlines(DISPLAYSURF, XDIM, YDIM, GREEN)
                 pygame.display.update()
-                time.sleep(5)
+                time.sleep(2)
                 pygame.quit()   #Closes the pygame window
                 sys.exit()      # Closes the python script
             
@@ -121,7 +121,7 @@ if __name__ == "__main__":
                 pygame.display.set_caption("LOSER")
                 drawboardlines(DISPLAYSURF, XDIM, YDIM, RED)
                 pygame.display.update()
-                time.sleep(5)
+                time.sleep(2)
                 pygame.quit()   #Closes the pygame window
                 sys.exit()      # Closes the python script
 
